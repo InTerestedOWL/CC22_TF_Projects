@@ -28,7 +28,7 @@ service nginx start
 }
 
 resource "aws_autoscaling_group" "web" {
-  name = local.lc_resource_name
+  name = local.resource_name
 
   min_size         = local.min_instance
   desired_capacity = local.min_instance
@@ -43,7 +43,6 @@ resource "aws_autoscaling_group" "web" {
 
   vpc_zone_identifier = module.vpc.public_subnets
 
-  # Required to redeploy without an outage.
   lifecycle {
     create_before_destroy = true
   }
@@ -53,4 +52,5 @@ resource "aws_autoscaling_group" "web" {
     value               = local.resource_name
     propagate_at_launch = true
   }
+
 }
